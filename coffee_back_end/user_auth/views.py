@@ -215,3 +215,9 @@ def logout_view(request):
         return Response({"detail": "注销成功"})
     except Exception as e:
         return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def health_check(request):
+    """健康检查接口，用于部署平台的健康检查"""
+    return Response({"status": "ok"}, status=200)

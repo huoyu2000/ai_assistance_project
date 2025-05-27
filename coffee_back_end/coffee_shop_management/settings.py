@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-#hijab*4ox^8#b^t-z-!zqqd(-$)i^h*q-$j8pp^87d2yy+@k+"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']  # 允许所有主机访问，生产环境中应该限制为特定域名
+ALLOWED_HOSTS = ['*', '.koyeb.app']
 
 
 # Application definition
@@ -189,3 +190,6 @@ CORS_ALLOW_ALL_ORIGINS = True  # 开发环境中允许所有来源访问API
 
 # 自定义用户模型
 AUTH_USER_MODEL = 'user_auth.Staff'
+
+# CSRF设置
+CSRF_TRUSTED_ORIGINS = ['https://*.koyeb.app', 'http://localhost:5173']

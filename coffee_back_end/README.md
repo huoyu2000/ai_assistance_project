@@ -1,6 +1,6 @@
-# 咖啡店进销存管理系统
+# 咖啡店管理系统 - 后端
 
-这是一个基于Django和REST框架开发的咖啡店进销存管理系统的后端部分。系统提供了完整的咖啡店经营所需的管理功能，包括商品管理、采购管理、销售管理、库存管理、财务管理、报表分析和权限管理。
+这是一个咖啡店管理系统的后端API，基于Django REST Framework开发。
 
 ## 功能模块
 
@@ -12,48 +12,33 @@
 - **报表分析**：畅销饮品榜；时段客流热力图；会员复购率
 - **权限管理**：角色划分，店长、值班经理、吧台咖啡师、收银员、仓管；权限分配
 
-## 安装和运行
+## 部署说明
 
-### 环境要求
+### Koyeb部署
 
-- Python 3.8+
-- Django 5.2+
-- Django REST Framework 3.16+
+1. 在Koyeb上创建新的应用
+2. 选择GitHub仓库作为源代码
+3. 选择后端目录作为构建目录
+4. 使用以下环境变量:
+   - `PORT`: 8000
+   - `DEBUG`: False
+   - `ALLOWED_HOSTS`: .koyeb.app
+   - `DATABASE_URL`: 您的数据库URL
 
-### 安装步骤
+### 本地开发
 
-1. 克隆项目代码到本地
-2. 创建并激活虚拟环境（可选但推荐）
-   ```
-   python -m venv venv
-   source venv/bin/activate  # Linux/Mac
-   venv\Scripts\activate  # Windows
-   ```
-3. 安装依赖
-   ```
-   pip install -r requirements.txt
-   ```
-4. 执行数据库迁移
-   ```
-   python manage.py makemigrations
-   python manage.py migrate
-   ```
-5. 创建超级用户
-   ```
-   python manage.py createsuperuser
-   ```
-6. 启动开发服务器
-   ```
-   python manage.py runserver
-   ```
+1. 安装依赖: `pip install -r requirements.txt`
+2. 运行迁移: `python manage.py migrate`
+3. 创建超级用户: `python manage.py createsuperuser`
+4. 启动服务器: `python manage.py runserver`
 
-### API文档
+## API文档
 
-启动服务器后，可以通过以下地址访问API浏览器界面：
-- http://127.0.0.1:8000/api/
+API文档可在`/api/docs/`路径访问。
 
-管理员界面：
-- http://127.0.0.1:8000/admin/
+## 健康检查
+
+健康检查接口位于`/api/auth/health/`路径。
 
 ## 技术栈
 

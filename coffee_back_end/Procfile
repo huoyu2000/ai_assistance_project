@@ -1,2 +1,2 @@
-release: python manage.py initialize_db
-web: gunicorn coffee_shop_management.wsgi --log-file -
+release: python manage.py migrate
+web: bash start.sh

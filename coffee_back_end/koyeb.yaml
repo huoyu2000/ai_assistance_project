@@ -1,0 +1,29 @@
+name: coffee-shop-backend
+service:
+  name: api
+  ports:
+    - port: 8000
+      protocol: http
+  routes:
+    - path: /
+      port: 8000
+  health_checks:
+    - type: http
+      port: 8000
+      path: /api/auth/health/
+      initial_delay: 30s
+      interval: 15s
+      timeout: 10s
+      success_threshold: 1
+      failure_threshold: 3
+  env:
+    - key: PORT
+      value: "8000"
+    - key: DEBUG
+      value: "False"
+    - key: ALLOWED_HOSTS
+      value: ".koyeb.app"
+  build:
+    builder: pip
+  run:
+    command: bash start.sh 

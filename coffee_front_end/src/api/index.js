@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // 创建axios实例
 const apiClient = axios.create({
-  baseURL: process.env.VUE_APP_API_URL || 'https://coffee-backend.up.railway.app/api',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'

@@ -16,6 +16,9 @@ from django.db import connections
 from django.db.utils import OperationalError
 from django.utils import timezone
 from django.conf import settings
+import socket
+import sys
+import os
 
 class StaffViewSet(viewsets.ModelViewSet):
     queryset = Staff.objects.all()
@@ -238,10 +241,24 @@ def health_check(request):
         db_status = "ok"
     except OperationalError:
         db_status = "error"
+    except Exception as e:
+        db_status = f"error: {str(e)}"
+    
+    # 获取主机名和IP地址
+    hostname = socket.gethostname()
+    try:
+        ip = socket.gethostbyname(hostname)
+    except:
+        ip = "无法获取IP"
     
     return Response({
         "status": "ok",
         "database": db_status,
         "timestamp": timezone.now().isoformat(),
-        "environment": "production" if not settings.DEBUG else "development"
+        "environment": "production" if not settings.DEBUG else "development",
+        "hostname": hostname,
+        "ip": ip,
+        "python_version": sys.version,
+        "allowed_hosts": settings.ALLOWED_HOSTS,
+        "port": os.environ.get("PORT", "未设置")
     }, status=200)

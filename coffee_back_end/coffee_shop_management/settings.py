@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 import os
+import dj_database_url
+from dotenv import load_dotenv
+
+# 加载.env文件中的环境变量
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -91,6 +96,7 @@ WSGI_APPLICATION = "coffee_shop_management.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# 默认数据库配置
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
@@ -105,6 +111,11 @@ DATABASES = {
         },
     }
 }
+
+# 如果存在DATABASE_URL环境变量，则使用它覆盖默认配置
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
+    DATABASES['default'] = dj_database_url.parse(DATABASE_URL, conn_max_age=600)
 
 
 # Password validation
@@ -194,4 +205,9 @@ CORS_ALLOW_ALL_ORIGINS = True  # 开发环境中允许所有来源访问API
 AUTH_USER_MODEL = 'user_auth.Staff'
 
 # CSRF设置
-CSRF_TRUSTED_ORIGINS = ['https://*.koyeb.app', 'http://localhost:5173']
+CSRF_TRUSTED_ORIGINS = ['https://*.koyeb.app', 'http://localhost:5173', 'http://localhost:8000', 'http://127.0.0.1:8000']
+CSRF_COOKIE_SECURE = False
+CSRF_USE_SESSIONS = True
+
+# 会话设置
+SESSION_COOKIE_SECURE = False

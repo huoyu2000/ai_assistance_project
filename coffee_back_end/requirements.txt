@@ -7,4 +7,6 @@ django-extensions>=3.2.0,<4.0.0  # 提供额外的管理命令
 djangorestframework-simplejwt>=5.2.0,<6.0.0  # JWT认证
 mysqlclient>=2.1.0  # MySQL连接库
 gunicorn>=21.2.0  # WSGI服务器，用于生产环境
-whitenoise>=6.5.0  # 静态文件服务 
+whitenoise>=6.5.0  # 静态文件服务
+dj-database-url>=2.0.0  # 数据库URL解析
+python-dotenv>=1.0.0  # 环境变量加载

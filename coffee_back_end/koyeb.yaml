@@ -11,9 +11,9 @@ service:
     - type: http
       port: 8000
       path: /api/auth/health/
-      initial_delay: 60s
+      initial_delay: 90s
       interval: 30s
-      timeout: 20s
+      timeout: 30s
       success_threshold: 1
       failure_threshold: 5
   env:
@@ -22,8 +22,17 @@ service:
     - key: DEBUG
       value: "False"
     - key: ALLOWED_HOSTS
-      value: ".koyeb.app,localhost,127.0.0.1"
+      value: ".koyeb.app,localhost,127.0.0.1,0.0.0.0"
+    - key: DJANGO_SETTINGS_MODULE
+      value: "coffee_shop_management.settings"
+    - key: PYTHONUNBUFFERED
+      value: "1"
+    - key: PYTHONDONTWRITEBYTECODE
+      value: "1"
+    - key: GUNICORN_CMD_ARGS
+      value: "--bind=0.0.0.0:8000 --workers=2 --threads=4 --timeout=120 --log-level=debug"
   build:
     builder: pip
   run:
-    command: bash start.sh 
+    command: bash -c "chmod +x ./start.sh && ./start.sh"
+    port: 8000 

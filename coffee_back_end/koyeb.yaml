@@ -29,8 +29,9 @@ service:
       value: "1"
     - key: PYTHONDONTWRITEBYTECODE
       value: "1"
-    - key: GUNICORN_CMD_ARGS
-      value: "--bind=0.0.0.0:8000 --workers=2 --threads=4 --timeout=120 --log-level=debug"
+    # Simplified Gunicorn arguments, directly in start.sh or default
+    # - key: GUNICORN_CMD_ARGS 
+    #   value: "--workers=2 --threads=4 --timeout=120 --log-level=debug"
   build:
     builder: pip
   run:

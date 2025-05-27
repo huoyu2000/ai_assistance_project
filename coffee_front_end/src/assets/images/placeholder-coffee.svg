@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <rect width="100%" height="100%" fill="#f0f5f2"></rect>
+  <g transform="translate(50 50)">
+    <g transform="translate(-25 -25)">
+      <!-- 咖啡杯 -->
+      <path d="M15,30 L35,30 L39,70 L11,70 Z" fill="#ffffff" stroke="#638770" stroke-width="2"></path>
+      <!-- 咖啡杯把手 -->
+      <path d="M39,40 C50,40 50,55 39,55" fill="none" stroke="#638770" stroke-width="2"></path>
+      <!-- 咖啡表面 -->
+      <path d="M16,35 L34,35 L33,40 L17,40 Z" fill="#638770"></path>
+      <!-- 蒸汽 -->
+      <path d="M22,20 C22,15 28,15 28,20" fill="none" stroke="#638770" stroke-width="1.5" stroke-linecap="round"></path>
+      <path d="M28,20 C28,15 34,15 34,20" fill="none" stroke="#638770" stroke-width="1.5" stroke-linecap="round"></path>
+    </g>
+    <text x="0" y="30" font-family="sans-serif" font-size="8" fill="#638770" text-anchor="middle">咖啡图片</text>
+  </g>
+</svg> 

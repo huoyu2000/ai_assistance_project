@@ -1,0 +1,76 @@
+@import './base.css';
+
+/* 全局样式 */
+:root {
+  --sidebar-width: 180px;
+  --top-header-height: 64px;
+  --primary-text-color: #121714;
+  --secondary-text-color: #638770;
+  --sidebar-bg: #F5F5F5;
+  --sidebar-text-color: #121714;
+  --sidebar-text-hover-color: #121714;
+  --sidebar-active-bg: #F0F5F2;
+  --sidebar-active-color: #121714;
+  --main-bg-color: #F5F5F5;
+  --content-bg-color: #FFFFFF;
+  --border-color: #E5E8EB;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--primary-text-color);
+  background-color: var(--main-bg-color);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  transition: 0.4s;
+}
+
+@media (min-width: 1024px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  #app {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .page-content-container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  .main-wrapper {
+    max-width: calc(100% - var(--sidebar-width)) !important;
+    width: calc(100% - var(--sidebar-width)) !important;
+  }
+  
+  .main-content {
+    width: 100% !important;
+    overflow-x: hidden !important;
+  }
+}
+
+/* 通用页面内容容器样式 */
+.page-content-container {
+  max-width: 100%;
+  overflow-x: hidden;
+}

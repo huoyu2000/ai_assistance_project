@@ -35,5 +35,5 @@ service:
   build:
     builder: pip
   run:
-    command: bash -c "chmod +x ./start.sh && ./start.sh"
+    command: "bash ./start.sh"
     port: 8000 

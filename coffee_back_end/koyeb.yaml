@@ -35,5 +35,5 @@ service:
   build:
     builder: pip
   run:
-    command: "bash ./start.sh"
+    command: "echo 'koyeb.yaml run command was executed (this should ideally not be the web process if Procfile is used)'"
     port: 8000 

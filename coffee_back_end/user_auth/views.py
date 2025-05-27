@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.views import TokenVerifyView
 from .models import Staff, Role, Permission, RolePermission, OperationLog
 from .serializers import (
     StaffSerializer, RoleSerializer, PermissionSerializer,
@@ -215,6 +216,12 @@ def logout_view(request):
         return Response({"detail": "注销成功"})
     except Exception as e:
         return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def verify_token(request):
+    """验证令牌有效性"""
+    return TokenVerifyView.as_view()(request)
 
 @api_view(['GET'])
 @permission_classes([AllowAny])

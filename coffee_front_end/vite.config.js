@@ -21,14 +21,8 @@ export default defineConfig({
     assetsDir: 'assets',
     // 生成sourcemap便于调试
     sourcemap: true,
-    // 压缩代码
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
+    // 使用默认的压缩方式，不指定terser
+    minify: 'esbuild',
   },
   // 开发服务器配置
   server: {

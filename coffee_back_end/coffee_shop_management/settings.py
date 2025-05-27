@@ -27,7 +27,9 @@ SECRET_KEY = "django-insecure-#hijab*4ox^8#b^t-z-!zqqd(-$)i^h*q-$j8pp^87d2yy+@k+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*', '.koyeb.app']
+# 设置允许的主机
+ALLOWED_HOSTS_ENV = os.environ.get('ALLOWED_HOSTS', '*')
+ALLOWED_HOSTS = ALLOWED_HOSTS_ENV.split(',') if ALLOWED_HOSTS_ENV else ['*']
 
 
 # Application definition

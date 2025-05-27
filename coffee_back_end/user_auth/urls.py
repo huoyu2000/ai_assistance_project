@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 from . import views
 from .views import (
     StaffViewSet, PermissionViewSet, RoleViewSet, 
@@ -21,12 +21,10 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('token/verify/', views.verify_token, name='token_verify'),
+    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    
+    # 健康检查路由 - 放在最前面确保容易访问
+    path('health/', health_check, name='health_check'),
 ]
 
-urlpatterns += router.urls
-
-# 添加健康检查路由
-urlpatterns += [
-    path('health/', health_check, name='health_check'),
-] 
+urlpatterns += router.urls 

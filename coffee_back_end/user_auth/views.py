@@ -12,6 +12,10 @@ from .serializers import (
     RolePermissionSerializer, UserLoginSerializer, PasswordChangeSerializer,
     OperationLogSerializer
 )
+from django.db import connections
+from django.db.utils import OperationalError
+from django.utils import timezone
+from django.conf import settings
 
 class StaffViewSet(viewsets.ModelViewSet):
     queryset = Staff.objects.all()
@@ -227,4 +231,17 @@ def verify_token(request):
 @permission_classes([AllowAny])
 def health_check(request):
     """健康检查接口，用于部署平台的健康检查"""
-    return Response({"status": "ok"}, status=200)
+    try:
+        # 检查数据库连接
+        db_conn = connections['default']
+        db_conn.cursor()
+        db_status = "ok"
+    except OperationalError:
+        db_status = "error"
+    
+    return Response({
+        "status": "ok",
+        "database": db_status,
+        "timestamp": timezone.now().isoformat(),
+        "environment": "production" if not settings.DEBUG else "development"
+    }, status=200)

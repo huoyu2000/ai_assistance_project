@@ -10,4 +10,4 @@ python manage.py collectstatic --noinput
 
 # 启动Gunicorn服务器
 echo "Starting Gunicorn server..."
-gunicorn coffee_shop_management.wsgi:application --bind 0.0.0.0:$PORT 
+gunicorn coffee_shop_management.wsgi:application --bind 0.0.0.0:$PORT --log-level debug 

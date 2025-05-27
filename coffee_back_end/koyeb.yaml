@@ -11,18 +11,18 @@ service:
     - type: http
       port: 8000
       path: /api/auth/health/
-      initial_delay: 30s
-      interval: 15s
-      timeout: 10s
+      initial_delay: 60s
+      interval: 30s
+      timeout: 20s
       success_threshold: 1
-      failure_threshold: 3
+      failure_threshold: 5
   env:
     - key: PORT
       value: "8000"
     - key: DEBUG
       value: "False"
     - key: ALLOWED_HOSTS
-      value: ".koyeb.app"
+      value: ".koyeb.app,localhost,127.0.0.1"
   build:
     builder: pip
   run:

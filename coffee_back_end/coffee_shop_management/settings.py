@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework_simplejwt",
     # 自定义应用
+    "coffee_shop_management",  # 主应用，包含自定义命令
     "product",  # 商品管理
     "procurement",  # 采购管理
     "sales",  # 销售管理

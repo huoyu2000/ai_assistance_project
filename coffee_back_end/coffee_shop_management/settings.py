@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-#hijab*4ox^8#b^t-z-!zqqd(-$)i^h*q-$j8pp^87d2yy+@k+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # 允许所有主机访问，生产环境中应该限制为特定域名
 
 
 # Application definition
@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # 添加whitenoise中间件
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",  # CORS中间件
     "django.middleware.common.CommonMiddleware",
@@ -89,11 +90,11 @@ WSGI_APPLICATION = "coffee_shop_management.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "coffee_shop",
+        "NAME": "railway",
         "USER": "root",
-        "PASSWORD": "123123",
-        "HOST": "localhost",
-        "PORT": "3306",
+        "PASSWORD": "vIOWWyXRMKVlntIErERcnhhkIROgKDVF",
+        "HOST": "shortline.proxy.rlwy.net",
+        "PORT": "30619",
         "OPTIONS": {
             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
             "charset": "utf8mb4",
@@ -138,6 +139,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # 使用whitenoise存储静态文件
 
 # 媒体文件配置
 MEDIA_URL = '/media/'

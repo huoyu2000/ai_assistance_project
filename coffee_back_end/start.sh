@@ -1,6 +1,10 @@
 #!/bin/bash
 
-echo "--- start.sh script initiated ---"
+set -e
+set -x
+
+echo "--- start.sh script initiated (v2) ---"
+sleep 2 # Give logs a chance to flush
 
 # 显示环境信息
 echo "--- Environment Information ---"
@@ -11,83 +15,45 @@ echo "Effective PORT: $PORT"
 echo "ALLOWED_HOSTS: $ALLOWED_HOSTS"
 echo "DJANGO_SETTINGS_MODULE: $DJANGO_SETTINGS_MODULE"
 echo "Current directory: $(pwd)"
+ls -la
 
 # 检查并显示Python和Django版本
 echo "--- Python and Django Information ---"
-if command -v python &> /dev/null; then
-    python --version
-    python -c "import django; print(f'Django version: {django.__version__}')"
-else
-    echo "Python command not found! Exiting."
-    exit 1
-fi
+python --version
+python -c "import django; print(f'Django version: {django.__version__}')"
 
 # 检查Gunicorn
 echo "--- Gunicorn Information ---"
-if command -v gunicorn &> /dev/null; then
-    echo "Gunicorn path: $(command -v gunicorn)"
-    gunicorn --version
-else
-    echo "Gunicorn command not found! Exiting."
-    exit 1
-fi
+gunicorn --version
 
 # 应用数据库迁移
 echo "--- Applying Database Migrations ---"
 python manage.py migrate --noinput
-if [ $? -ne 0 ]; then
-    echo "Database migration failed! Exiting."
-    exit 1
-fi
 
 # 收集静态文件
 echo "--- Collecting Static Files ---"
 python manage.py collectstatic --noinput --clear
-if [ $? -ne 0 ]; then
-    echo "Collect static files failed! Exiting."
-    exit 1
-fi
 
-# Gunicorn配置检查
-echo "--- Checking Gunicorn Configuration ---"
-# Hardcoded Gunicorn args for testing
-GUNICORN_WORKERS=2
-GUNICORN_THREADS=4
-GUNICORN_TIMEOUT=120
-GUNICORN_LOG_LEVEL="debug"
+# Gunicorn配置检查 (Simplified for now)
+echo "--- Checking Gunicorn Configuration (Simplified) ---"
+BASIC_GUNICORN_CHECK_CMD="gunicorn coffee_shop_management.wsgi:application --bind 0.0.0.0:$PORT --check-config --log-level=debug --error-logfile=-"
+echo "Gunicorn check command: $BASIC_GUNICORN_CHECK_CMD"
+$BASIC_GUNICORN_CHECK_CMD
+echo "Gunicorn configuration check completed."
 
-echo "Gunicorn check command: gunicorn coffee_shop_management.wsgi:application --bind 0.0.0.0:$PORT --workers $GUNICORN_WORKERS --threads $GUNICORN_THREADS --timeout $GUNICORN_TIMEOUT --log-level $GUNICORN_LOG_LEVEL --check-config --access-logfile='-' --error-logfile='-'"
-gunicorn coffee_shop_management.wsgi:application \
-    --bind "0.0.0.0:$PORT" \
-    --workers "$GUNICORN_WORKERS" \
-    --threads "$GUNICORN_THREADS" \
-    --timeout "$GUNICORN_TIMEOUT" \
-    --log-level "$GUNICORN_LOG_LEVEL" \
-    --check-config \
-    --access-logfile="-" \
-    --error-logfile="-"
 
-if [ $? -ne 0 ]; then
-    echo "Gunicorn configuration check failed! Exiting."
-    exit 1
-else
-    echo "Gunicorn configuration check passed."
-fi
+# 启动Gunicorn服务器 (Simplified command for testing)
+echo "--- Starting Gunicorn Server (Simplified) ---"
+# Basic Gunicorn arguments for testing
+GUNICORN_WORKERS_TEST=1
+GUNICORN_TIMEOUT_TEST=120
+GUNICORN_LOG_LEVEL_TEST="debug"
 
-# 启动Gunicorn服务器
-echo "--- Starting Gunicorn Server ---"
-echo "Attempting to start Gunicorn on 0.0.0.0:$PORT with WSGI app: coffee_shop_management.wsgi:application"
-echo "Full Gunicorn command: exec gunicorn coffee_shop_management.wsgi:application --bind 0.0.0.0:$PORT --workers $GUNICORN_WORKERS --threads $GUNICORN_THREADS --timeout $GUNICORN_TIMEOUT --log-level $GUNICORN_LOG_LEVEL --access-logfile='-' --error-logfile='-'"
+FINAL_GUNICORN_CMD="exec gunicorn coffee_shop_management.wsgi:application --bind 0.0.0.0:$PORT --workers $GUNICORN_WORKERS_TEST --timeout $GUNICORN_TIMEOUT_TEST --log-level $GUNICORN_LOG_LEVEL_TEST --access-logfile='-' --error-logfile='-'"
+echo "Final Gunicorn command: $FINAL_GUNICORN_CMD"
 
-exec gunicorn coffee_shop_management.wsgi:application \
-    --bind "0.0.0.0:$PORT" \
-    --workers "$GUNICORN_WORKERS" \
-    --threads "$GUNICORN_THREADS" \
-    --timeout "$GUNICORN_TIMEOUT" \
-    --log-level "$GUNICORN_LOG_LEVEL" \
-    --access-logfile="-" \
-    --error-logfile="-"
+$FINAL_GUNICORN_CMD
 
 # 如果Gunicorn启动失败或退出，下面的代码会被执行
-echo "Gunicorn failed to start or exited unexpectedly! Exiting."
+echo "Gunicorn failed to start or exited unexpectedly! Exiting from start.sh."
 exit 1 

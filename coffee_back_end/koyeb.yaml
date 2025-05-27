@@ -11,11 +11,11 @@ service:
     - type: http
       port: 8000
       path: /api/auth/health/
-      initial_delay: 90s
+      initial_delay: 120s
       interval: 30s
       timeout: 30s
       success_threshold: 1
-      failure_threshold: 5
+      failure_threshold: 10
   env:
     - key: PORT
       value: "8000"
@@ -34,6 +34,7 @@ service:
     #   value: "--workers=2 --threads=4 --timeout=120 --log-level=debug"
   build:
     builder: pip
-  run:
-    command: "echo 'koyeb.yaml run command was executed (this should ideally not be the web process if Procfile is used)'"
-    port: 8000 
+  # 注释掉run部分，让Procfile完全控制进程
+  # run:
+  #   command: "echo 'koyeb.yaml run command was executed (this should ideally not be the web process if Procfile is used)'"
+  #   port: 8000 
